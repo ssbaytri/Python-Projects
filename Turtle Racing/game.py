@@ -1,4 +1,5 @@
 import turtle
+import time
 
 WIDTH, HEIGHT = 500, 500
 
@@ -23,8 +24,17 @@ def init_turtle():
     screen.setup(width=WIDTH, height=HEIGHT)
     screen.bgcolor("#d1d1d1")
     screen.title("Turtle Racing")
-    screen.mainloop()
 
 
 racers = get_number_of_players()
 init_turtle()
+
+racer = turtle.Turtle(shape="turtle")
+racer.speed(1)
+racer.color("red")
+racer.penup()
+racer.left(90)
+racer.forward(100)
+racer.right(90)
+racer.forward(100)
+time.sleep(5)
