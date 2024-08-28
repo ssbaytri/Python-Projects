@@ -20,3 +20,36 @@ answers = ("C", "B", "D", "D", "A")
 guesses = []
 score = 0
 question_number = 0
+
+for question in questions:
+    print("-----------------------")
+    print(question)
+    for option in options[question_number]:
+        print(option)
+
+    guess = input("Pick Up (A, B, C, D): ").upper()
+    guesses.append(guess)
+    if guess == answers[question_number]:
+        score += 1
+        print("CORRECT!")
+    else:
+        print("INCORRECT!")
+        print(f"The correct answer is {answers[question_number]}")
+    question_number += 1
+
+print("-----------------------")
+print("        RESULTS        ")
+print("-----------------------")
+
+print("Answers: ", end="")
+for answer in answers:
+    print(answer, end=" ")
+print()
+print("Guesses: ", end="")
+for guess in guesses:
+    print(guess, end=" ")
+print()
+
+score = int(score / len(questions) * 100)
+print(f"Your score is: {score}%")
+
