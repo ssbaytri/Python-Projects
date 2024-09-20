@@ -1,8 +1,7 @@
 # Hangman Game
 
 import random
-
-words = ("computer", "space", "energy", "pickaxe", "science", "delivery", "work", "gem")
+from wordlist import word_list
 
 # Hangman stages dictionary
 hangman_stages = {
@@ -85,7 +84,7 @@ def display_answer(answer):
 
 
 def main():
-    answer = random.choice(words)
+    answer = random.choice(word_list)
     hint = ["_"] * len(answer)
     wrong_guesses = 0
     guessed_letters = set()
@@ -123,7 +122,6 @@ def main():
             print("You Lost!, The answer was: ")
             display_answer(answer)
             running = False
-
 
 
 if __name__ == "__main__":
