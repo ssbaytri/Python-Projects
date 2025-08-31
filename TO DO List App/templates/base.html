@@ -1,55 +1,62 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TO DO List App</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>TODO List App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center py-10">
-    <h1 class="text-4xl font-bold mb-6 text-gray-800">TODO List App</h1>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-10 px-4">
+  <h1 class="text-4xl font-bold mb-6 text-gray-800">TODO List App</h1>
 
-    <form action="/add" method="POST" class="mb-8 w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-        <label for="title" class="block text-gray-700 font-semibold mb-2">TODO Title:</label>
-        <input type="text" id="title" name="title" required
-               class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
-        <button type="submit"
-                class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
-            Add TODO
-        </button>
-    </form>
+  <!-- Add Form -->
+  <form action="/add" method="POST"
+        class="mb-8 w-full max-w-md bg-white p-6 rounded-lg shadow-md border border-gray-100">
+    <label for="title" class="block text-gray-700 font-semibold mb-2">TODO Title:</label>
+    <input type="text" id="title" name="title" required
+           class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"/>
+    <button type="submit"
+            class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+      Add TODO
+    </button>
+  </form>
 
-    <div class="w-full max-w-md">
-        {% for todo in todos %}
-        <div class="flex items-center justify-between bg-white p-4 mb-4 rounded-lg shadow-md">
-            <div>
-                <p>
-                  <span class="text-sm text-gray-400 mr-2">{{ todo.id }}</span>
-                  <span class="text-lg font-semibold text-gray-900">{{ todo.title }}</span>
-                </p>
-                {% if todo.completed == False %}
-                    <span class="inline-block mt-1 px-2 py-0.5 text-sm font-semibold text-red-700 bg-red-100 rounded-full">
-                        Not Completed
-                    </span>
-                {% else %}
-                    <span class="inline-block mt-1 px-2 py-0.5 text-sm font-semibold text-green-700 bg-green-100 rounded-full">
-                        Completed
-                    </span>
-                {% endif %}
-            </div>
-            <div class="space-x-2">
-                <a href="/update/{{ todo.id }}"
-                   class="text-blue-600 hover:text-blue-800 font-semibold transition">
-                   Update
-                </a>
-                <a href="/delete/{{ todo.id }}"
-                   class="text-red-600 hover:text-red-800 font-semibold transition">
-                   Delete
-                </a>
-            </div>
+  <!-- List -->
+  <div class="w-full max-w-md space-y-5">
+    {% for todo in todos %}
+    <div class="bg-white p-5 rounded-xl shadow-md border border-gray-100 transition hover:shadow-lg overflow-hidden">
+      <!-- FLEX ROW: left grows, right stays neat -->
+      <div class="flex items-start justify-between gap-4">
+
+        <!-- LEFT: id + title + status (can grow & wrap) -->
+        <div class="flex-1 min-w-0">
+          <div class="flex items-start gap-2 min-w-0">
+            <span class="text-xs text-gray-400 shrink-0">#{{ todo.id }}</span>
+            <h3 class="text-lg font-semibold text-gray-900 leading-snug min-w-0
+                       break-words break-all">
+              {{ todo.title }}
+            </h3>
+          </div>
+
+          <span class="{% if not todo.completed %}text-red-700 bg-red-100{% else %}text-green-700 bg-green-100{% endif %} inline-block px-3 py-1 text-xs font-semibold rounded-full mt-2">
+            {% if not todo.completed %}Not Completed{% else %}Completed{% endif %}
+          </span>
         </div>
-        {% endfor %}
+
+        <!-- RIGHT: actions (don’t shrink, stay aligned) -->
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 shrink-0 self-start">
+          <a href="/update/{{ todo.id }}"
+             class="inline-flex items-center justify-center px-3 py-1.5 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-50 transition">
+            Update
+          </a>
+          <a href="/delete/{{ todo.id }}"
+             class="inline-flex items-center justify-center px-3 py-1.5 rounded-md border border-red-600 text-red-600 hover:bg-red-50 transition">
+            Delete
+          </a>
+        </div>
+      </div>
     </div>
+    {% endfor %}
+  </div>
 </body>
 </html>
