@@ -1,8 +1,13 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from app.schemas import Post
+from app.db import Post, create_db, get_session
+from sqlalchemy.ext.asyncio import AsyncSession
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await create_db()
+    yield
 
-@app.get("/hello_world")
-def hello_wordl():
-    return {"message": "hello world"}
+app = FastAPI(lifespan=lifespan)
 
