@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
 
-class Post(BaseModel):
+class exPost(BaseModel):
     title: str
     content: str
